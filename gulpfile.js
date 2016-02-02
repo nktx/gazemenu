@@ -16,17 +16,24 @@ gulp.task('styles', function() {
 		.pipe(gulp.dest('public/css/'));
 }); 
 
+// Scripts
+gulp.task('scripts', function() {
+	return gulp.src(['app/scripts/**/*.js'])
+		.pipe(gulp.dest('public/js/'));
+});
+
 // Clean task
 gulp.task('clean', function() {
-	return del(['public/css']);
+	return del(['public/css', 'public/js']);
 });
 
 // Default task
 gulp.task('default', ['clean'], function() {  
-	gulp.start('styles');
+	gulp.start('styles', 'scripts');
 });
 
 // Watch task
 gulp.task('watch', function() {
   gulp.watch('app/styles/**/*.scss', ['styles']);
+  gulp.watch('app/scripts/**/*.js', ['scripts']);
 });
