@@ -12,7 +12,22 @@ app.get('/', function(req, res) {
 });
 
 app.get('/pilot1', function(req, res) {
-	res.render('pages/pilot1');
+
+
+	var items = {};
+
+	item1st = {
+		'A', 'B', 'C', 'D'
+	};
+
+	item2nd = {
+		'E', 'F', 'G', 'H',
+		'I', 'J', 'K', 'L',
+		'M', 'N', 'O', 'P',
+		'Q', 'R', 'S', 'T'
+	};
+
+	res.render('pages/pilot1', items);
 });
 
 app.listen(8080);

@@ -1,10 +1,21 @@
-$menu-size: 300px;
+/** -------------------- Z-INDEX
+
+1st submenu: 10
+2nd submenu: 20 
+
+------------------------------**/
+
+$menu-size: 200px;
 $menu-color-1: #D0D0D0;
-$menu-color-2: #DDD;
+$menu-color-2: #DDDDDD;
+
+/** Main menu
+------------------------------**/
 
 .menu {
 	height: $menu-size;
 	width: $menu-size;
+
 	position: absolute;
 	transform: rotate(45deg);
 }
@@ -14,16 +25,16 @@ $menu-color-2: #DDD;
 }
 
 .menu-item {
-	border: #AAAAAA 1px solid;
-	
 	height: 50%;
 	width: 50%;
 
 	position: absolute;
-	box-sizing: border-box;
 	text-align: center;
 	padding-top: ($menu-size/4)-10;
 
+	box-sizing: border-box;	
+	border: #AAAAAA 1px solid;
+	
 	transition: background-color .2s ease-in;
 
 	&:hover {
@@ -33,20 +44,29 @@ $menu-color-2: #DDD;
 
 .submenu {
 	transform: rotate(0);
+	z-index: 10;
+	
+	.submenu {
+		z-index: 20;
+	}
 }
+
+/** Menu-item Position Adjustment
+------------------------------**/
 
 .menu-item--top {
 	background-color: $menu-color-1;
 	border-radius: 100% 0 0 0;
 	left: 0;
 	top: 0;
-		.submenu {
-			bottom: 0;
-			right: 0;
+
+		& > .submenu {
+			bottom: 10px;
+			right: 10px;
 			visibility: hidden;
 		}
 
-		&:hover .submenu {
+		&:hover > .submenu {
 			visibility: visible;
 		}
 }
@@ -56,13 +76,14 @@ $menu-color-2: #DDD;
 	border-radius: 0 100% 0 0;
 	right: 0;
 	top: 0;
-		.submenu {
-			bottom: 0;
-			left: 0;
+
+		& > .submenu {
+			bottom: 10px;
+			left: 10px;
 			visibility: hidden;
 		}
 
-		&:hover .submenu {
+		&:hover > .submenu {
 			visibility: visible;
 		}
 }
@@ -72,13 +93,14 @@ $menu-color-2: #DDD;
 	border-radius: 0 0 100% 0;
 	right: 0;
 	bottom: 0;
-		.submenu {
-			top: 0;
-			left: 0;
+
+		& > .submenu {
+			top: 10px;
+			left: 10px;
 			visibility: hidden;
 		}
 
-		&:hover .submenu {
+		&:hover > .submenu {
 			visibility: visible;
 		}
 }
@@ -88,13 +110,14 @@ $menu-color-2: #DDD;
 	border-radius: 0 0 0 100%;
 	left: 0;
 	bottom: 0;
-		.submenu {
-			top: 0;
-			right: 0;
+
+		& > .submenu {
+			top: 10px;
+			right: 10px;
 			visibility: hidden;
 		}
 
-		&:hover .submenu {
+		&:hover > .submenu {
 			visibility: visible;
 		}
 }

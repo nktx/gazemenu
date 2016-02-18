@@ -1,0 +1,45 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	color: #333333;
+}
+
+h3,
+h5 {
+	text-align: center;
+	width: 100%;
+}
+
+h3 {
+	color: #222;
+}
+
+h5 {
+	color: #444;
+}
+
+p,
+input {
+	text-align: center;
+}
+
+input {
+	background-color: transparent;
+	padding: 5px;
+	border: none;
+	border-bottom: #FFFFFF 1px solid;
+	color: #FFFFFF;
+
+	&::-webkit-input-placeholder {
+    color: #FFFFFF;
+	}
+}
+
+header {
+	padding: 20px;
+	height: 200px;
+	background-image: linear-gradient(180deg, rgba(255,255,255,0) 30%, #fff),linear-gradient(70deg, #f7cac9 32%, #91a8d0);
+}
+
+.hidden {
+	visibility: hidden;
+}
