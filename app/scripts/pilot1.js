@@ -1,8 +1,6 @@
 $(function() {
 
 	var target = '';
-	var taskNum = 0;
-	var taskStartTime = 0;
 
 	var targets = [
 		'A-E-01',
@@ -71,6 +69,11 @@ $(function() {
 		'D-T-64'
 	];
 
+	var taskNum = 0;
+	var taskStartTime = 0;
+	var taskPath = [];
+	var taskFlag = false;
+
 	// Initialization
 	// ------------------------------
 
@@ -82,15 +85,32 @@ $(function() {
 				createNewDataFile();
 			}
 
+			taskFlag = true;
 			taskStartTime = Date.now();
 			$('#m-1').addClass('hidden');
 			$('.selected').removeClass('selected');
 			assignNewTask();
 		}
+
+		if (event.keyCode == 187) {
+			$('.user-info').toggleClass('hidden');
+		}
 	});
 
+	// Path Record
+	// ------------------------------
+
+	$(document).mousemove(function(e) {
+		if (taskFlag) {
+      taskPath.push({
+          x: e.pageX,
+          y: e.pageY
+      });
+    }
+  });
+
 	function createNewDataFile() {
-		console.log('create file');
+		console.log('create data file');
 	}
 
 	// Task Assignment
@@ -132,7 +152,9 @@ $(function() {
 						if ($this.text() == target.slice(4,6)) {
 
 							console.log(Date.now() - taskStartTime);
+							console.log(taskPath);
 							$this.addClass('selected');
+							taskFlag = false;
 						}
 					}
 				}, 3000);
@@ -181,10 +203,8 @@ $(function() {
 
 		$this.prop('hoverTimeout', setTimeout(function() {
 
-			// if (timer != 0) {
-				$('#m-1').addClass('hidden');
-			// }
-			
+			$('#m-1').addClass('hidden');
+
 		}, 1000));
 	});
 

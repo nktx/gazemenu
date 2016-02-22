@@ -7,6 +7,16 @@
 	color: #FFF;
 }
 
+.user-info {
+	position: absolute;
+
+	top: 0;
+	left: 50%;
+
+	margin-left: -90px;
+	z-index: 100;
+}
+
 /** Trigger Button
 ------------------------------**/
 
