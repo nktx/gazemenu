@@ -2,6 +2,7 @@ $(function() {
 
 	var target = '';
 	var taskNum = 0;
+	var taskStartTime = 0;
 
 	var targets = [
 		'A-E-01',
@@ -81,6 +82,7 @@ $(function() {
 				createNewDataFile();
 			}
 
+			taskStartTime = Date.now();
 			$('#m-1').addClass('hidden');
 			$('.selected').removeClass('selected');
 			assignNewTask();
@@ -110,6 +112,7 @@ $(function() {
 
 	var intend = '';
 	var timer = 0;
+	var flag = false;
 
 	function mouseoverHandler() {
 		return function () {
@@ -119,15 +122,22 @@ $(function() {
 
 			intend = $this.text();
 
-			timer = setTimeout( function(){
-				if (intend == $this.text()) {
-					console.log('select ' + $this.text());
-					if ($this.text() == target.slice(4,6)) {
+			if (!flag) {
 
-						$this.addClass('selected');
+				flag = true;
+
+				timer = setTimeout( function(){
+					if (intend == $this.text()) {
+						console.log('select ' + $this.text());
+						if ($this.text() == target.slice(4,6)) {
+
+							console.log(Date.now() - taskStartTime);
+							$this.addClass('selected');
+						}
 					}
-				}
-			}, 3000);
+				}, 3000);
+
+			}
 		};
 	}
 
@@ -138,6 +148,8 @@ $(function() {
 			intend = '';
 			clearTimeout(timer);
 			timer = 0;
+
+			flag = false;
 
 		};
 	}
