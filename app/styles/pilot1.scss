@@ -2,10 +2,15 @@
 @import 'base';
 @import 'menu';
 
+.menu-item.selected {
+	background-color: #1ABC9C;
+	color: #FFF;
+}
+
 /** Trigger Button
 ------------------------------**/
 
-$trigger-size: 50px;
+$trigger-size: 100px;
 
 .trigger-btn {
 	height: $trigger-size;
