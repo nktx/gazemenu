@@ -85,11 +85,13 @@ $(function() {
 				createNewDataFile();
 			}
 
-			taskFlag = true;
-			taskStartTime = Date.now();
 			$('#m-1').addClass('hidden');
 			$('.selected').removeClass('selected');
-			assignNewTask();
+
+			taskPath = [];
+			taskFlag = true;
+			taskStartTime = Date.now();
+			assignNewTask();			
 		}
 
 		if (event.keyCode == 187) {
@@ -110,7 +112,7 @@ $(function() {
   });
 
 	function createNewDataFile() {
-		console.log('create data file');
+		//console.log('create data file');
 	}
 
 	// Task Assignment
@@ -154,6 +156,7 @@ $(function() {
 							console.log(Date.now() - taskStartTime);
 							console.log(taskPath);
 							$this.addClass('selected');
+
 							taskFlag = false;
 						}
 					}
