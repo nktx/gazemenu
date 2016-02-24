@@ -312,6 +312,8 @@ $(function() {
 
 							taskNum++;
 							taskFlag = false;
+
+							$('.progress').css('width', taskNum*100/192+'%');
 							$('.trigger-text').text('--');
 						}
 					}

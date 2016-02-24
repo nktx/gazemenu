@@ -17,6 +17,19 @@
 	z-index: 100;
 }
 
+.progress-bar {
+	height: 4px;
+	width: 100%;
+
+	.progress {
+		background-color: #1ABC9C;
+		border-top-right-radius: 2px;
+		border-bottom-right-radius: 2px;
+		height: 4px;
+		width: 0%;
+	}
+}
+
 /** Trigger Button
 ------------------------------**/
 
