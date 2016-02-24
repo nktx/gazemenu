@@ -91,7 +91,7 @@ $(function() {
 			taskPath = [];
 			taskFlag = true;
 			taskStartTime = Date.now();
-			assignNewTask();			
+			assignNewTask();
 		}
 
 		if (event.keyCode == 187) {
@@ -113,6 +113,27 @@ $(function() {
 
 	function createNewDataFile() {
 		//console.log('create data file');
+	}
+
+	function recordTaskData(name, task, path, time) {
+
+		$.ajax({
+			url: '/pilot1',
+			type: 'POST',
+			data: {
+				name: name,
+				task: task,
+				path: path,
+				time: time
+			},
+			error: function(xhr) {
+				alert('ajax request error');
+			},
+			success: function(response) {
+				console.log('success');
+			}
+		});
+
 	}
 
 	// Task Assignment
@@ -153,9 +174,10 @@ $(function() {
 						console.log('select ' + $this.text());
 						if ($this.text() == target.slice(4,6)) {
 
-							console.log(Date.now() - taskStartTime);
-							console.log(taskPath);
+							// console.log(Date.now() - taskStartTime);
+							// console.log(taskPath);
 							$this.addClass('selected');
+							recordTaskData($('.user-info input').val(), target, JSON.stringify(taskPath), Date.now() - taskStartTime);
 
 							taskFlag = false;
 						}
