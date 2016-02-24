@@ -2,8 +2,12 @@
 
 var express = require('express'),
 		path = require('path');
-var bodyParser = require("body-parser");
+
+var fs = require('fs');
+var jsonfile = require('jsonfile')
+var bodyParser = require('body-parser');
 var app = express();
+
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -20,12 +24,24 @@ app.get('/pilot1', function(req, res) {
 });
 
 app.post('/pilot1',function(req, res){
-	var name = req.body.name;
-	var task = req.body.task;
-  var time = req.body.time;
-  var path = req.body.path;
+	var data = {};
+	data.name = req.body.name;
+	data.task = req.body.task;
+  data.time = req.body.time;
+  data.path = JSON.parse(req.body.path);
 
+  // console.log(data);
   res.end('yes');
+
+	var file = 'data/'+ Date.now() +'.json'
+	var obj = data;
+ 
+	jsonfile.writeFile(file, obj, function (err) {
+		if (err) {
+	  	return console.log(err);
+		}
+	})
+
  });
 
 app.listen(8080);

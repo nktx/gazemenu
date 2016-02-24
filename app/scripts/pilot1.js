@@ -106,7 +106,8 @@ $(function() {
 		if (taskFlag) {
       taskPath.push({
           x: e.pageX,
-          y: e.pageY
+          y: e.pageY,
+          t: Date.now() - taskStartTime
       });
     }
   });
@@ -182,7 +183,7 @@ $(function() {
 							taskFlag = false;
 						}
 					}
-				}, 3000);
+				}, 1000);
 
 			}
 		};
