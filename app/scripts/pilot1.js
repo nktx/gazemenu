@@ -81,17 +81,22 @@ $(function() {
 
 	$(document).keydown(function(event){ 
 		if (event.keyCode == 32) { 
-			if (taskNum == 0) {
-				createNewDataFile();
+
+			//console.log(taskNum);
+
+			if (taskNum >= 64) {
+				$('body').css('background', '#EEE');
+			} else {
+
+				$('#m-1').addClass('hidden');
+				$('.selected').removeClass('selected');
+
+				taskPath = [];
+				taskFlag = true;
+				taskStartTime = Date.now();
+				assignNewTask();
 			}
-
-			$('#m-1').addClass('hidden');
-			$('.selected').removeClass('selected');
-
-			taskPath = [];
-			taskFlag = true;
-			taskStartTime = Date.now();
-			assignNewTask();
+			
 		}
 
 		if (event.keyCode == 187) {
@@ -105,16 +110,12 @@ $(function() {
 	$(document).mousemove(function(e) {
 		if (taskFlag) {
       taskPath.push({
-          x: e.pageX,
-          y: e.pageY,
-          t: Date.now() - taskStartTime
+        x: e.pageX,
+        y: e.pageY,
+        t: Date.now() - taskStartTime
       });
     }
   });
-
-	function createNewDataFile() {
-		//console.log('create data file');
-	}
 
 	function recordTaskData(name, task, path, time) {
 
@@ -142,7 +143,6 @@ $(function() {
 
 	function assignNewTask() {
 		target = randomTarget();
-		taskNum++;
 		$('.trigger-text').text(target);
 	}
 
@@ -180,7 +180,9 @@ $(function() {
 							$this.addClass('selected');
 							recordTaskData($('.user-info input').val(), target, JSON.stringify(taskPath), Date.now() - taskStartTime);
 
+							taskNum++;
 							taskFlag = false;
+							$('.trigger-text').text('--');
 						}
 					}
 				}, 1000);
@@ -216,7 +218,9 @@ $(function() {
 		}
 
 		$this.prop('hoverIntent', setTimeout(function() {
-			$('#m-1').removeClass('hidden');
+			if (taskFlag) {
+				$('#m-1').removeClass('hidden');
+			}
 		}, 1000));
 	});
 
