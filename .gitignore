@@ -12,5 +12,6 @@ logs
 results
 build
 public
+data
 
 node_modules
