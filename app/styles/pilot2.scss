@@ -1,0 +1,77 @@
+@import 'normalize';
+@import 'base';
+
+.menu-item.selected {
+	background-color: #1ABC9C;
+	color: #FFF;
+}
+
+.user-info {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -90px;
+	z-index: 100;
+}
+
+.progress-bar {
+	height: 4px;
+	width: 100%;
+
+	.progress {
+		background-color: #1ABC9C;
+		border-top-right-radius: 2px;
+		border-bottom-right-radius: 2px;
+		height: 4px;
+		width: 0%;
+	}
+}
+
+// Trigger Area
+// ------------------------------
+
+$trigger-size: 120px;
+
+.trigger-area {
+	height: $trigger-size;
+	width: $trigger-size;
+	border: #EFEFEF 1px dashed;
+	border-radius: 50%;
+	position: absolute;
+
+	&.trigger--start {
+		left: 260px;
+		top: 260px;
+	}
+
+	&.trigger--top {
+		left: 260px;
+		top: -60px;
+	}
+
+	&.trigger--right {
+		left: 580px;
+		top: 260px;
+	}
+
+	&.trigger--bottom {
+		left: 260px;
+		top: 580px;
+	}
+
+	&.trigger--left {
+		left: -60px;
+		top: 260px;
+	}
+}
+
+// Menu Block
+// ------------------------------
+
+#pilot2-block {
+	height: 640px;
+	width: 640px;
+	position: relative;
+	margin: 0 auto;
+	border: #ccc 1px solid;
+}

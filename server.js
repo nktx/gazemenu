@@ -22,6 +22,10 @@ app.get('/pilot1', function(req, res) {
 	res.render('pages/pilot1');
 });
 
+app.get('/pilot2', function(req, res) {
+	res.render('pages/pilot2');
+});
+
 app.post('/pilot1',function(req, res){
 	var data = {};
 	data.name = req.body.name;
@@ -32,7 +36,7 @@ app.post('/pilot1',function(req, res){
   // console.log(data);
   res.end('yes');
 
-	var file = 'data/'+ Date.now() +'.json'
+	var file = 'data/pilot1/'+ Date.now() +'.json'
 	var obj = data;
  
 	jsonfile.writeFile(file, obj, function (err) {
