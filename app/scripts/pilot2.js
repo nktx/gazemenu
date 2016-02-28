@@ -1,12 +1,6 @@
 $(function() {
 
-	// var target = '';
-
-	// var taskNum = 0;
-	// var taskStartTime = 0;
-	// var taskPath = [];
-	// var taskFlag = false;
-
+	var readyFlag = 0;
 	var blockPos = {};
 
 	// Initialization
@@ -16,8 +10,9 @@ $(function() {
 	blockPos.y = $('#pilot2-block').offset().top;
 
 	$(document).keydown(function(event){ 
-		if (event.keyCode == 32) { 
+		if (event.keyCode == 90) { 
 
+			readyFlag = 1;
 			// if (taskNum >= 192) {
 			// 	$('body').css('background', '#EEE');
 			// } else {
@@ -174,32 +169,18 @@ $(function() {
 	// Trigger 1st Menu
 	// ------------------------------
 
-	// $('.trigger-btn').on('mouseover', function () {
-	// 	var $this = $(this);
+	$('.trigger--start').on('mouseover', function () {
+		var $this = $(this);
 
-	// 	if ($this.prop('hoverTimeout')) {
-	// 		$this.prop('hoverTimeout', clearTimeout($this.prop('hoverTimeout')));
-	// 	}
+		if ($this.prop('hoverTimeout')) {
+			$this.prop('hoverTimeout', clearTimeout($this.prop('hoverTimeout')));
+		}
 
-	// 	$this.prop('hoverIntent', setTimeout(function() {
-	// 		if (taskFlag) {
-	// 			$('#m-1').removeClass('hidden');
-	// 		}
-	// 	}, 1000));
-	// });
-
-	// $('#m-1').on('mouseleave', function () {
-	// 	var $this = $(this);
-
-	// 	if ($this.prop('hoverIntent')) {
-	// 		$this.prop('hoverIntent', clearTimeout($this.prop('hoverIntent')));
-	// 	}
-
-	// 	$this.prop('hoverTimeout', setTimeout(function() {
-
-	// 		$('#m-1').addClass('hidden');
-
-	// 	}, 1000));
-	// });
+		$this.prop('hoverIntent', setTimeout(function() {
+			if (readyFlag) {
+				$('.trigger--start').addClass('triggered');
+			}
+		}, 1000));
+	});
 
 });

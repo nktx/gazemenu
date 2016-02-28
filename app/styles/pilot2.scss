@@ -63,6 +63,10 @@ $trigger-size: 120px;
 		left: -60px;
 		top: 260px;
 	}
+
+	&.triggered {
+		border: #222 1px solid;
+	}
 }
 
 // Menu Block
