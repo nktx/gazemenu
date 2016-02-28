@@ -3,6 +3,9 @@ $(function() {
 	var readyFlag = 0;
 	var blockPos = {};
 
+	var targets = ['r', 'g', 'b', 'y'];
+	var task = '';
+
 	// Initialization
 	// ------------------------------
 
@@ -26,6 +29,10 @@ $(function() {
 			// 	assignNewTask();
 			// }
 			
+		}
+
+		if (event.keyCode == 67) {
+			resetTask();
 		}
 
 		if (event.keyCode == 187) {
@@ -97,16 +104,20 @@ $(function() {
 	// Task Assignment
 	// ------------------------------
 
-	// function assignNewTask() {
-	// 	// target = randomTarget();
-	// 	target = targets.pop();
-	// 	$('.trigger-text').text(target);
-	// }
+	function assignNewTask() {
+		task = randomTarget();
+	}
 
-	// function randomTarget(){
-	// 	ri = Math.floor(Math.random()*targets.length);
-	// 	return targets[ri];
-	// }
+	function resetTask(){
+		$('.trigger--start').removeClass('triggered r g b y');
+		readyFlag = 0;
+		task = '';
+	}
+
+	function randomTarget(){
+		ri = Math.floor(Math.random()*targets.length);
+		return targets[ri];
+	}
 
 	// Trigger Menu Selection
 	// ------------------------------
@@ -178,7 +189,9 @@ $(function() {
 
 		$this.prop('hoverIntent', setTimeout(function() {
 			if (readyFlag) {
-				$('.trigger--start').addClass('triggered');
+
+				assignNewTask();
+				$('.trigger--start').addClass('triggered ' + task);
 			}
 		}, 1000));
 	});

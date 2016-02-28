@@ -65,7 +65,10 @@ $trigger-size: 120px;
 	}
 
 	&.triggered {
-		border: #222 1px solid;
+		&.r {border: #e74c3c 1px dashed;}
+		&.g {border: #2ecc71 1px dashed;}
+		&.b {border: #3498db 1px dashed;}
+		&.y {border: #f1c40f 1px dashed;}		
 	}
 }
 
