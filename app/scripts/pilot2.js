@@ -1,7 +1,11 @@
 $(function() {
 
 	var readyFlag = 0;
+	var taskFlag = 0;
+	var commitFlag = 0;
 	var blockPos = {};
+
+	var taskNum = 0;
 
 	var targets = ['r', 'g', 'b', 'y'];
 	var task = '';
@@ -29,6 +33,13 @@ $(function() {
 			// 	assignNewTask();
 			// }
 			
+		}
+
+		if (event.keyCode == 88) {
+			if (commitFlag) {
+				commitTask();
+				resetTask();	
+			}	
 		}
 
 		if (event.keyCode == 67) {
@@ -101,16 +112,32 @@ $(function() {
 
 	// }
 
-	// Task Assignment
+	// Task Commit
+	// ------------------------------
+
+	function commitTask() {
+
+		// recordTaskData($('.user-info input').val(), target, JSON.stringify(taskPath), Date.now() - taskStartTime);
+
+		taskNum++;
+		$('.progress').css('width', taskNum*100/10+'%');
+	}
+
+	// Task Assign & Rest
 	// ------------------------------
 
 	function assignNewTask() {
-		task = randomTarget();
+		if (taskFlag == 0) {
+			task = randomTarget();
+			taskFlag = 1;
+		}
 	}
 
 	function resetTask(){
-		$('.trigger--start').removeClass('triggered r g b y');
+		$('.trigger-area').removeClass('triggered r g b y');
 		readyFlag = 0;
+		taskFlag = 0;
+		commitFlag = 0;
 		task = '';
 	}
 
@@ -119,7 +146,7 @@ $(function() {
 		return targets[ri];
 	}
 
-	// Trigger Menu Selection
+	// Trigger Target
 	// ------------------------------
 
 	// var intend = '';
@@ -161,23 +188,45 @@ $(function() {
 	// 	};
 	// }
 
-	// function mouseleaveHandler() {
-	// 	return function () {
-	// 		var $this = $(this);
+	function mouseoverHandler() {
+		return function () {
+			var $this = $(this);
 
-	// 		intend = '';
-	// 		clearTimeout(timer);
-	// 		timer = 0;
+			if ((task == 'r') && $this.hasClass('trigger--top')) {
+				$this.addClass('triggered r');
+				commitFlag = 1;
+			}
 
-	// 		flag = false;
+			if ((task == 'g') && $this.hasClass('trigger--right')) {
+				$this.addClass('triggered g');
+				commitFlag = 1;
+			}
 
-	// 	};
-	// }
+			if ((task == 'b') && $this.hasClass('trigger--bottom')) {
+				$this.addClass('triggered b');
+				commitFlag = 1;
+			}
 
-	// $('.selection').on('mouseover', mouseoverHandler());
-	// $('.selection').on('mouseleave', mouseleaveHandler());
+			if ((task == 'y') && $this.hasClass('trigger--left')) {
+				$this.addClass('triggered y');
+				commitFlag = 1;
+			}
 
-	// Trigger 1st Menu
+		};
+	}
+
+	function mouseleaveHandler() {
+		return function () {
+			var $this = $(this);	
+			$this.removeClass('triggered r g b y');
+			commitFlag = 0;
+		};
+	}
+
+	$('.trigger--end').on('mouseover', mouseoverHandler());
+	$('.trigger--end').on('mouseleave', mouseleaveHandler());
+
+	// Trigger Start
 	// ------------------------------
 
 	$('.trigger--start').on('mouseover', function () {
