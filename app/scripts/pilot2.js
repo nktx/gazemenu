@@ -88,7 +88,7 @@ $(function() {
 
 	function getDashOffset(relateNum, x, y) {
     if ((x >= 0) && (x <= 640) && (y >= 0) && (y <=640)) {
-    	return 440-relateNum*440;
+    	return 640-Math.sqrt(relateNum)*640;
     } else {
     	return 0;
     }
