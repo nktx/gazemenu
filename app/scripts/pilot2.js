@@ -52,10 +52,10 @@ $(function() {
 		
 		var relateTop, relateRight, relateBottom, relateLeft;
 
-		relateTop = (640 - offsetY)/640;
-		relateRight = offsetX/640;
-		relateBottom = offsetY/640;
-		relateLeft = (640 - offsetX)/640;
+		relateTop = (450-distance(offsetX, offsetY, 320, 0))/450;
+		relateRight = (450-distance(offsetX, offsetY, 640, 320))/450;
+		relateBottom = (450-distance(offsetX, offsetY, 320, 640))/450;
+		relateLeft = (450-distance(offsetX, offsetY, 0, 320))/450;
 
 		$('#pathTop').attr('stroke-opacity', relateTop);
 		$('#pathRight').attr('stroke-opacity', relateRight);
@@ -67,6 +67,11 @@ $(function() {
 		$('#pathBottom').attr('stroke-width', relateBottom*10);
 		$('#pathLeft').attr('stroke-width', relateLeft*10);
 
+		$('#pathTop').attr('stroke-dashoffset', getDashOffset(relateTop, offsetX, offsetY));
+		$('#pathRight').attr('stroke-dashoffset', getDashOffset(relateRight, offsetX, offsetY));
+		$('#pathBottom').attr('stroke-dashoffset', getDashOffset(relateBottom, offsetX, offsetY));
+		$('#pathLeft').attr('stroke-dashoffset', getDashOffset(relateLeft, offsetX, offsetY));
+
 		if (taskFlag) {
       taskPath.push({
         x: offsetX,
@@ -76,6 +81,18 @@ $(function() {
     }
 
 	});
+
+	function distance(x, y, x0, y0) {
+		return Math.sqrt((x -= x0) * x + (y -= y0) * y);
+	}
+
+	function getDashOffset(relateNum, x, y) {
+    if ((x >= 0) && (x <= 640) && (y >= 0) && (y <=640)) {
+    	return 440-relateNum*440;
+    } else {
+    	return 0;
+    }
+	}
 
 	// Path Record
 	// ------------------------------
