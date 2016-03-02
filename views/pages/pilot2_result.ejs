@@ -1,0 +1,48 @@
+<!-- views/pages/pilot1.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+	<link rel="stylesheet" href="css/pilot2.min.css">
+</head>
+<body>
+
+	<div class="user-info hidden">
+		<form action="">
+			<input type="text" name="fname" />
+		</form>
+	</div>
+
+	<div class="progress-bar">
+		<div class="progress"></div>
+	</div>
+	
+	<div id="pilot2-block" style="border:none;">
+
+	  <svg width="640" height="640">
+	  	<path id="pathRight" d="M320 320 A80 80,0 0 1 480 320 L640 320" stroke="#2ecc71" fill="none" stroke-opacity="0.5" stroke-width="3"/>
+	  	<path id="pathBottom" d="M320 320 A80 80,0 0 1 320 480 L320 640" stroke="#3498db" fill="none" stroke-opacity="0.5" stroke-width="3"/>
+	  	<path id="pathLeft" d="M320 320 A80 80,0 0 1 160 320 L0 320" stroke="#f1c40f" fill="none" stroke-opacity="0.5" stroke-width="3"/>
+	  	<path id="pathTop" d="M320 320 A80 80,0 0 1 320 160 L320 0" stroke="#e74c3c" fill="none" stroke-opacity="0.5" stroke-width="3"/>
+	  </svg>
+
+	  <div class="trigger-area trigger--start">
+	  </div>
+		<div class="trigger-area trigger--end trigger--top">
+	  </div>
+	  <div class="trigger-area trigger--end trigger--right">
+	  </div>
+	  <div class="trigger-area trigger--end trigger--bottom">
+	  </div>
+	  <div class="trigger-area trigger--end trigger--left">
+	  </div>
+
+	</div>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+	<script type="text/javascript" src="js/pilot2_result.js"></script>
+
+</body>
+</html>

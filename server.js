@@ -26,6 +26,32 @@ app.get('/pilot2', function(req, res) {
 	res.render('pages/pilot2');
 });
 
+app.get('/pilot2_data', function(req, res) {
+
+	var data = [];
+
+  fs.readdir('data/pilot2/', function(err, filenames) {
+    if (err) {
+      onError(err);
+    }
+
+    filenames.forEach(function(filename) {
+      var file = 'data/pilot2/' + filename;
+      data.push(jsonfile.readFileSync(file))
+    });
+
+    res.send(data);
+
+    // console.log(data);
+    // res.render('pages/pilot2_result', { 'data' : data });
+  });	
+
+});
+
+app.get('/pilot2_result', function(req, res) {
+	res.render('pages/pilot2_result');
+});
+
 app.post('/pilot1',function(req, res){
 	var data = {};
 	data.name = req.body.name;
