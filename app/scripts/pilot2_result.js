@@ -1,6 +1,5 @@
 $(function() {
 
-
 var line = d3.svg.line()
 		.x(function(d) {
 			return d.x;
@@ -54,20 +53,11 @@ function drawResult(result){
 			});
 		}
 		
-
 	});
 }
 
-$.get('/pilot2_data', function(result){
-  drawResult(result);
+$.get('/pilot2_data', function(data){
+  drawResult(data);
 });
 
-
-// svg.append('path')
-// 	.attr({
-// 		'd': line(data2),
-// 		'stroke': '#000',
-// 		'stroke-width': '1px',
-// 		'fill': 'none'
-// 	});
 });

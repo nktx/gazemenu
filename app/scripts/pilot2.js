@@ -9,11 +9,19 @@ $(function() {
 	var taskPath = [];
 	var taskStartTime = 0;
 
-	var targets = ['r', 'g', 'b', 'y'];
+	var targets = [
+		'r', 'g', 'b', 'y',
+		'r', 'g', 'b', 'y',
+		'r', 'g', 'b', 'y',
+		'r', 'g', 'b', 'y',
+		'r', 'g', 'b', 'y'
+	];
 	var task = '';
 
 	// Initialization
 	// ------------------------------
+
+	targets.sort(function(){return Math.round(Math.random());});
 
 	blockPos.x = $('#pilot2-block').offset().left;
 	blockPos.y = $('#pilot2-block').offset().top;
@@ -127,7 +135,7 @@ $(function() {
 
 		taskNum++;
 		taskPath = [];
-		$('.progress').css('width', taskNum*100/10+'%');
+		$('.progress').css('width', taskNum*100/20+'%');
 	}
 
 	// Task Assign & Reset
@@ -135,7 +143,8 @@ $(function() {
 
 	function assignNewTask() {
 		if (taskFlag == 0) {
-			task = randomTarget();
+			// task = randomTarget();
+			task = targets.pop();
 			taskFlag = 1;
 			taskStartTime = Date.now();
 		}
