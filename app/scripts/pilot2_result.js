@@ -44,7 +44,7 @@ function drawResult(result){
 			});
 		}
 
-		if (data.task == 'a') {
+		if (data.task == 'y') {
 			svg.append('path')
 			.attr({
 				'd': line(data.path),
