@@ -7,6 +7,8 @@ $(function() {
 	var color = ['#E74C3C', '#2ECC71', '#3498DB', '#F1C40F'];
 	var taskNum = 0;
 	var taskPath = [];
+	var task = 'no-guidance';
+	var taskStartTime = 0;
 
 	var lastPos = {};
 	var curPos = {};
@@ -22,7 +24,12 @@ $(function() {
 	$(document).keydown(function(event){ 
 		if (event.keyCode == 90) { 
 			taskFlag = 1;
-			$('#guidance').fadeIn();
+			taskStartTime = Date.now();
+
+			if (taskNum >= 5) {
+				task = 'with-guidance';
+				$('#guidance').fadeIn();
+			}
 		}
 
 		if (event.keyCode == 88) {
@@ -41,6 +48,8 @@ $(function() {
 	function commitTask() {
 		var result = recognizer.Recognize(taskPath);
 		console.log(result);
+
+		recordTaskData($('.user-info input').val(), task, JSON.stringify(taskPath), Date.now() - taskStartTime);
 
 		taskNum++;
 		$('.progress').css('width', taskNum*100/10+'%');
@@ -105,34 +114,33 @@ $(function() {
 	function angle(cx, cy, ex, ey) {
 		var dy = ey - cy;
 		var dx = ex - cx;
-		var theta = Math.atan2(dy, dx); // range (-PI, PI]
-		theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
-		//if (theta < 0) theta = 360 + theta; // range [0, 360)
+		var theta = Math.atan2(dy, dx);
+		theta *= 180 / Math.PI;
 		return theta;
 	}
 
 	// Path Record
 	// ------------------------------
 
-	// function recordTaskData(name, task, path, time) {
+	function recordTaskData(name, task, path, time) {
 
-	// 	$.ajax({
-	// 		url: '/pilot2',
-	// 		type: 'POST',
-	// 		data: {
-	// 			name: name,
-	// 			task: task,
-	// 			path: path,
-	// 			time: time
-	// 		},
-	// 		error: function(xhr) {
-	// 			alert('ajax request error');
-	// 		},
-	// 		success: function(response) {
-	// 			console.log('success');
-	// 		}
-	// 	});
+		$.ajax({
+			url: '/pilot3',
+			type: 'POST',
+			data: {
+				name: name,
+				task: task,
+				path: path,
+				time: time
+			},
+			error: function(xhr) {
+				alert('ajax request error');
+			},
+			success: function(response) {
+				console.log('success');
+			}
+		});
 
-	// }
+	}
 
 });

@@ -96,5 +96,25 @@ app.post('/pilot2',function(req, res){
 	})
 });
 
+app.post('/pilot3',function(req, res){
+	var data = {};
+	data.name = req.body.name;
+	data.task = req.body.task;
+  data.time = req.body.time;
+  data.path = JSON.parse(req.body.path);
+
+  // console.log(data);
+  res.end('yes');
+
+	var file = 'data/pilot3/'+ Date.now() +'.json'
+	var obj = data;
+ 
+	jsonfile.writeFile(file, obj, function (err) {
+		if (err) {
+	  	return console.log(err);
+		}
+	})
+});
+
 app.listen(8080);
 console.log('server listening on port 8080');
