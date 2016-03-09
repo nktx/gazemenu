@@ -49,7 +49,7 @@ $(function() {
 		var result = recognizer.Recognize(taskPath);
 		console.log(result);
 
-		recordTaskData($('.user-info input').val(), task, JSON.stringify(taskPath), Date.now() - taskStartTime);
+		recordTaskData($('.user-info input').val(), task, JSON.stringify(taskPath), JSON.stringify(result.Path), result.Name, result.Score, result.Circle, result.Correct, Date.now() - taskStartTime);
 
 		taskNum++;
 		$('.progress').css('width', taskNum*100/10+'%');
@@ -122,7 +122,7 @@ $(function() {
 	// Path Record
 	// ------------------------------
 
-	function recordTaskData(name, task, path, time) {
+	function recordTaskData(name, task, path, rpath, rname, rscore, rcircle, rcorrect, time) {
 
 		$.ajax({
 			url: '/pilot3',
@@ -131,6 +131,11 @@ $(function() {
 				name: name,
 				task: task,
 				path: path,
+				rpath: rpath,
+				rname: rname,
+				rscore: rscore,
+				rcircle: rcircle,
+				rcorrect: rcorrect,
 				time: time
 			},
 			error: function(xhr) {

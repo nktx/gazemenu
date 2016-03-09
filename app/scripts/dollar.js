@@ -98,10 +98,13 @@ function Unistroke(name, points) // constructor
 //
 // Result class
 //
-function Result(name, score) // constructor
+function Result(path, name, score, circle, correct) // constructor
 {
+	this.Path = path;
 	this.Name = name;
 	this.Score = score;
+	this.Circle = circle;
+	this.Correct = correct;
 }
 //
 // DollarRecognizer class constants
@@ -152,11 +155,18 @@ function DollarRecognizer() // constructor
 		points = TranslateTo(points, Origin);
 		var vector = Vectorize(points); // for Protractor
 
+		var circleScore = 0;
+
 		var b = +Infinity;
 		var u = -1;
 		for (var i = 0; i < this.Unistrokes.length; i++) // for each unistroke
 		{
 			var d;
+
+			if (i == 3) {
+				circleScore = DistanceAtBestAngle(points, this.Unistrokes[i], -AngleRange, +AngleRange, AnglePrecision);
+			}
+
 			if (useProtractor) // for Protractor
 				d = OptimalCosineDistance(this.Unistrokes[i].Vector, vector);
 			else // Golden Section Search (original $1)
@@ -166,7 +176,8 @@ function DollarRecognizer() // constructor
 				u = i; // unistroke
 			}
 		}
-		return (u == -1) ? new Result("No match.", 0.0) : new Result(this.Unistrokes[u].Name, useProtractor ? 1.0 / b : 1.0 - b / HalfDiagonal);
+		// return (u == -1) ? new Result("No match.", 0.0) : new Result(this.Unistrokes[u].Name, useProtractor ? 1.0 / b : 1.0 - b / HalfDiagonal);
+		return (u == -1) ? new Result(points, "No match.", 0.0, 0.0, false) : new Result(points, this.Unistrokes[u].Name, 1.0 - b / HalfDiagonal, 1.0 - circleScore / HalfDiagonal, (u == 3));
 	};
 	this.AddGesture = function(name, points)
 	{

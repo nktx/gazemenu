@@ -100,8 +100,13 @@ app.post('/pilot3',function(req, res){
 	var data = {};
 	data.name = req.body.name;
 	data.task = req.body.task;
+	data.rname = req.body.rname;
+	data.rscore = req.body.rscore;
+	data.rcircle = req.body.rcircle;
+	data.rcorrect = req.body.rcorrect;
   data.time = req.body.time;
   data.path = JSON.parse(req.body.path);
+  data.rpath = JSON.parse(req.body.rpath);
 
   // console.log(data);
   res.end('yes');
