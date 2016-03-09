@@ -1,3 +1,9 @@
+function Point(x, y) // constructor
+{
+	this.X = x;
+	this.Y = y;
+}
+
 $(function() {
 
 	var taskFlag = 0;
@@ -10,8 +16,8 @@ $(function() {
 	var task = 'no-guidance';
 	var taskStartTime = 0;
 
-	var lastPos = {};
-	var curPos = {};
+	var lastPos;
+	var curPos;
 
 	var recognizer = new DollarRecognizer;
 
@@ -22,7 +28,7 @@ $(function() {
 	blockPos.Y = $('#pilot3-block').offset().top;
 
 	$(document).keydown(function(event){ 
-		if (event.keyCode == 90) { 
+		if (event.keyCode == 90 && taskNum < 10) { 
 			taskFlag = 1;
 			taskStartTime = Date.now();
 
@@ -37,7 +43,7 @@ $(function() {
 			$('#guidance').fadeOut();
 		}
 
-		if (event.keyCode == 187) {
+		if (event.keyCode == 188) {
 			$('.user-info').toggleClass('hidden');
 		}
 	});
@@ -57,11 +63,15 @@ $(function() {
 		taskFlag = 0;
 		initFlag = 0;
 		taskPath = [];
-		d3.selectAll('#recognize path').remove();
+		d3.selectAll('#target path').remove();
 	}
 
-	// Path Drawing
+	// Path Drawing and Dynamic Guiding
 	// ------------------------------
+
+	var pi = Math.PI;
+	var target = d3.select('#target');
+	var guidance = d3.select('#guidance');
 
 	var line = d3.svg.line()
 		.x(function(d) {
@@ -72,26 +82,34 @@ $(function() {
 		})
 		.interpolate('basis');
 
-	var svg = d3.select('#recognize');
+	var arc = d3.svg.arc()
+    .innerRadius(function(d) {
+			return d.R;
+		})
+    .outerRadius(function(d) {
+			return d.R;
+		})
+    .startAngle(function(d) {
+			return (d.A+90) * (pi/180);
+		})
+    .endAngle(function(d) {
+			return (d.A+90) * (pi/180) + 100/d.R;
+		});
+
 
 	$(document).mousemove(function(e) {
 
-		curPos.X = e.pageX - blockPos.X;
-		curPos.Y = e.pageY - blockPos.Y;
+		curPos = new Point(e.pageX - blockPos.X, e.pageY - blockPos.Y);
 
 		if (!initFlag) {
-			lastPos.X = curPos.X;
-			lastPos.Y = curPos.Y;
+			lastPos = new Point(curPos.X, curPos.Y);
 			initFlag = 1;
 		}		
 
 		if (taskFlag) {
-      taskPath.push({
-        X: curPos.X,
-        Y: curPos.Y,
-      });
+      taskPath.push(curPos);
 
-	  	svg.append('path')
+	  	target.append('path')
 				.attr({
 					'd': line([lastPos, curPos]),
 					'stroke': '#16A085',
@@ -100,15 +118,30 @@ $(function() {
 				});
 		}
 
-  	lastPos.X = curPos.X;
-  	lastPos.Y = curPos.Y;
+  	lastPos = new Point(curPos.X, curPos.Y);
 
 		var a = angle(320, 320, curPos.X, curPos.Y);
+		var r = distance(320, 320, curPos.X, curPos.Y);
+
+		var offsetX = 300 - r * Math.cos(a * (pi/180));
+		var offsetY = 300 - r * Math.sin(a * (pi/180));
+
+		d3.select('#guidance path').remove();
+		guidance.append('path')
+						.attr({
+							'd': arc({A: a, R: r}),
+							'stroke': '#16A085',
+							'stroke-width': '15px',
+							'stroke-opacity': '0.3',
+							'fill': 'none',
+							'transform': 'translate('+offsetX+','+offsetY+')'
+						});
 
   	$('#guidance')
-  		.css('left', e.pageX-100)
-  		.css('top', e.pageY-100)
-  		.css('-webkit-transform', 'rotate('+ a +'deg)');
+  		.css({
+  			'left': e.pageX-300,
+				'top': e.pageY-300
+			});
 	});
 
 	function angle(cx, cy, ex, ey) {
@@ -117,6 +150,10 @@ $(function() {
 		var theta = Math.atan2(dy, dx);
 		theta *= 180 / Math.PI;
 		return theta;
+	}
+
+	function distance(x, y, x0, y0) {
+		return Math.sqrt((x -= x0) * x + (y -= y0) * y);
 	}
 
 	// Path Record
