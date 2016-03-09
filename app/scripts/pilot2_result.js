@@ -9,7 +9,7 @@ var line = d3.svg.line()
 		})
 		.interpolate('basis');
 
-var svg = d3.select('svg');
+var svg = d3.select('#main-svg');
 
 function drawResult(result){
 	result.forEach(function (data){

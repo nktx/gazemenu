@@ -26,6 +26,10 @@ app.get('/pilot2', function(req, res) {
 	res.render('pages/pilot2');
 });
 
+app.get('/pilot3', function(req, res) {
+	res.render('pages/pilot3');
+});
+
 app.get('/pilot2_data', function(req, res) {
 
 	var data = [];
