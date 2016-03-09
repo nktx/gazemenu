@@ -22,10 +22,12 @@ $(function() {
 	$(document).keydown(function(event){ 
 		if (event.keyCode == 90) { 
 			taskFlag = 1;
+			$('#guidance').fadeIn();
 		}
 
 		if (event.keyCode == 88) {
 			commitTask();
+			$('#guidance').fadeOut();
 		}
 
 		if (event.keyCode == 187) {
@@ -83,7 +85,7 @@ $(function() {
 	  	svg.append('path')
 				.attr({
 					'd': line([lastPos, curPos]),
-					'stroke': color[taskNum%4],
+					'stroke': '#16A085',
 					'stroke-width': '5px',
 					'fill': 'none'
 				});
@@ -91,7 +93,23 @@ $(function() {
 
   	lastPos.X = curPos.X;
   	lastPos.Y = curPos.Y;
+
+		var a = angle(320, 320, curPos.X, curPos.Y);
+
+  	$('#guidance')
+  		.css('left', e.pageX-100)
+  		.css('top', e.pageY-100)
+  		.css('-webkit-transform', 'rotate('+ a +'deg)');
 	});
+
+	function angle(cx, cy, ex, ey) {
+		var dy = ey - cy;
+		var dx = ex - cx;
+		var theta = Math.atan2(dy, dx); // range (-PI, PI]
+		theta *= 180 / Math.PI; // rads to degs, range (-180, 180]
+		//if (theta < 0) theta = 360 + theta; // range [0, 360)
+		return theta;
+	}
 
 	// Path Record
 	// ------------------------------

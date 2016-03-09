@@ -55,5 +55,11 @@ $trigger-size: 120px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-	border: #ECECEC 1px solid;
+	// border: #ECECEC 1px solid;
+}
+
+#guidance {
+	position: fixed;
+	// border: #ECECEC 1px solid;
+	display: none;
 }
