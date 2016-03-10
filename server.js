@@ -52,8 +52,34 @@ app.get('/pilot2_data', function(req, res) {
 
 });
 
+app.get('/pilot3_data', function(req, res) {
+
+	var data = [];
+
+  fs.readdir('data/pilot3/', function(err, filenames) {
+    if (err) {
+      onError(err);
+    }
+
+    filenames.forEach(function(filename) {
+      var file = 'data/pilot3/' + filename;
+      data.push(jsonfile.readFileSync(file))
+    });
+
+    res.send(data);
+
+    // console.log(data);
+    // res.render('pages/pilot2_result', { 'data' : data });
+  });	
+
+});
+
 app.get('/pilot2_result', function(req, res) {
 	res.render('pages/pilot2_result');
+});
+
+app.get('/pilot3_result', function(req, res) {
+	res.render('pages/pilot3_result');
 });
 
 app.post('/pilot1',function(req, res){

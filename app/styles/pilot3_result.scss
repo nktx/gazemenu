@@ -1,0 +1,22 @@
+@import 'normalize';
+@import 'base';
+@import 'grid';
+
+path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.center-align {
+	text-align: center;
+}
+
+.title {
+	color: #95a5a6;
+	font-size: 12px;
+	font-family: 'Gotham';
+	margin-right: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
