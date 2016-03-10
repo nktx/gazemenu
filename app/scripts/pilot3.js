@@ -19,6 +19,10 @@ $(function() {
 	var lastPos;
 	var curPos;
 
+	var xc = 0;
+	var yc = 0;
+	var tc = 0;
+
 	var recognizer = new DollarRecognizer;
 
 	// Initialization
@@ -64,6 +68,10 @@ $(function() {
 		initFlag = 0;
 		taskPath = [];
 		d3.selectAll('#target path').remove();
+
+		xc = 0;
+		yc = 0;
+		tc = 0;
 	}
 
 	// Path Drawing and Dynamic Guiding
@@ -93,14 +101,13 @@ $(function() {
 			return (d.A+90) * (pi/180);
 		})
     .endAngle(function(d) {
-			return (d.A+90) * (pi/180) + 100/d.R;
+			return (d.A+90) * (pi/180) + d.D/d.R;
 		});
-
 
 	$(document).mousemove(function(e) {
 
 		curPos = new Point(e.pageX - blockPos.X, e.pageY - blockPos.Y);
-
+		
 		if (!initFlag) {
 			lastPos = new Point(curPos.X, curPos.Y);
 			initFlag = 1;
@@ -108,6 +115,10 @@ $(function() {
 
 		if (taskFlag) {
       taskPath.push(curPos);
+
+      xc += curPos.X;
+			yc += curPos.Y;
+			tc++;
 
 	  	target.append('path')
 				.attr({
@@ -120,28 +131,32 @@ $(function() {
 
   	lastPos = new Point(curPos.X, curPos.Y);
 
-		var a = angle(320, 320, curPos.X, curPos.Y);
-		var r = distance(320, 320, curPos.X, curPos.Y);
+  	if (tc >= 1) {
 
-		var offsetX = 300 - r * Math.cos(a * (pi/180));
-		var offsetY = 300 - r * Math.sin(a * (pi/180));
+  		var a = angle((xc/tc +320)/2, (yc/tc +320)/2, curPos.X, curPos.Y);
+			var r = distance((xc/tc +320)/2, (yc/tc +320)/2, curPos.X, curPos.Y);
 
-		d3.select('#guidance path').remove();
-		guidance.append('path')
-						.attr({
-							'd': arc({A: a, R: r}),
-							'stroke': '#16A085',
-							'stroke-width': '15px',
-							'stroke-opacity': '0.3',
-							'fill': 'none',
-							'transform': 'translate('+offsetX+','+offsetY+')'
-						});
+			var offsetX = 300 - r * Math.cos(a * (pi/180));
+			var offsetY = 300 - r * Math.sin(a * (pi/180));
+			var guidanceLength = Math.min(100, Math.max(0, distance(taskPath[0].X, taskPath[0].Y, curPos.X, curPos.Y)-50));
 
-  	$('#guidance')
-  		.css({
-  			'left': e.pageX-300,
-				'top': e.pageY-300
-			});
+			d3.select('#guidance path').remove();
+			guidance.append('path')
+							.attr({
+								'd': arc({A: a, R: r, D: guidanceLength}),
+								'stroke': '#16A085',
+								'stroke-width': '15px',
+								'stroke-opacity': '0.3',
+								'fill': 'none',
+								'transform': 'translate('+offsetX+','+offsetY+')'
+							});
+
+	  	$('#guidance')
+	  		.css({
+	  			'left': e.pageX-300,
+					'top': e.pageY-300
+				});
+  	}
 	});
 
 	function angle(cx, cy, ex, ey) {
